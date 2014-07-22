@@ -38,7 +38,7 @@ set(build_type ${CMAKE_BUILD_TYPE})
 
 set(source_prefix ${base}/Source)
 set(build_prefix ${base}/Build)
-set(install_prefix ${base}/Install)
+set(install_prefix ${CMAKE_INSTALL_PREFIX})#${base}/Install)
 
 set(toolchain_dir "${CMAKE_CURRENT_SOURCE_DIR}/CMake/toolchains")
 set(ves_src_dir "${CMAKE_CURRENT_SOURCE_DIR}")
@@ -222,55 +222,6 @@ macro(crosscompile_curl proj toolchain_file)
   )
 endmacro()
 
-
-macro(compile_vtk proj)
-  if(NOT VES_HOST_SUPERBUILD)
-    set(makecmd make)
-    if(CMAKE_GENERATOR MATCHES "NMake Makefiles")
-      set(makecmd nmake)
-    elseif(CMAKE_GENERATOR MATCHES "Ninja")
-      set(makecmd ninja)
-    endif()
-    set(vtk_host_build_command BUILD_COMMAND ${makecmd} vtkCompileTools)
-  endif()
-  ExternalProject_Add(
-    ${proj}
-    SOURCE_DIR ${vtk_src_dir}
-    DOWNLOAD_DIR ${VES_DOWNLOAD_PREFIX}
-    URL http://www.vtk.org/files/release/6.0/vtk-6.0.0.tar.gz
-    URL_MD5 72ede4812c90bdc55172702f0cad02bb
-    PATCH_COMMAND ${CMAKE_COMMAND} -P ${vtk_patch_file}
-    INSTALL_COMMAND ""
-    ${vtk_host_build_command}
-    CMAKE_ARGS
-      -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}/${proj}
-      -DCMAKE_BUILD_TYPE:STRING=${build_type}
-      -DBUILD_SHARED_LIBS:BOOL=ON
-      -DBUILD_TESTING:BOOL=OFF
-      ${module_defaults}
-  )
-endmacro()
-
-
-macro(crosscompile_vtk proj toolchain_file)
-  ExternalProject_Add(
-    ${proj}
-    SOURCE_DIR ${vtk_src_dir}
-    DOWNLOAD_COMMAND ""
-    DEPENDS vtk-host
-    CMAKE_ARGS
-      -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}/${proj}
-      -DCMAKE_BUILD_TYPE:STRING=${build_type}
-      -DBUILD_SHARED_LIBS:BOOL=OFF
-      -DBUILD_TESTING:BOOL=OFF
-      -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${toolchain_dir}/${toolchain_file}
-      -DVTKCompileTools_DIR:PATH=${build_prefix}/vtk-host
-      ${module_defaults}
-      -C ${toolchain_dir}/TryRunResults.cmake
-  )
-endmacro()
-
-
 macro(compile_ves proj)
   set(tag host)
   list(APPEND VES_SUPERBUILD_${tag}_OPTS
@@ -299,7 +250,7 @@ macro(compile_ves proj)
     DOWNLOAD_COMMAND ""
     DEPENDS vtk-${tag} eigen ${VES_SUPERBUILD_${tag}_DEPS}
     CMAKE_ARGS
-      -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}/${proj}
+      -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}
       -DCMAKE_BUILD_TYPE:STRING=${build_type}
       -DBUILD_TESTING:BOOL=ON
       -DBUILD_SHARED_LIBS:BOOL=OFF
@@ -345,9 +296,9 @@ macro(crosscompile_ves proj tag toolchain_file)
     ${proj}
     SOURCE_DIR ${ves_src_dir}
     DOWNLOAD_COMMAND ""
-    DEPENDS vtk-${tag} eigen ${VES_SUPERBUILD_${tag}_DEPS}
+    DEPENDS eigen ${VES_SUPERBUILD_${tag}_DEPS}
     CMAKE_ARGS
-      -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}/${proj}
+      -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}
       -DCMAKE_BUILD_TYPE:STRING=${build_type}
       -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${toolchain_dir}/${toolchain_file}
       -DCMAKE_CXX_FLAGS:STRING=${VES_CXX_FLAGS}
@@ -371,7 +322,7 @@ endif()
 if (VES_USE_LIBARCHIVE)
   download_libarchive()
 endif()
-compile_vtk(vtk-host)
+#compile_vtk(vtk-host)
 
 if(VES_IOS_SUPERBUILD)
   foreach(target ios-simulator ios-device)
@@ -387,14 +338,15 @@ if(VES_IOS_SUPERBUILD)
 endif()
 
 if(VES_ANDROID_SUPERBUILD)
+    set(toolchain_android_file "android.toolchain.cmake")
   if (VES_USE_CURL)
-    crosscompile_curl(curl-android android.toolchain.cmake)
+    crosscompile_curl(curl-android ${toolchain_android_file})
   endif()
   if (VES_USE_LIBARCHIVE)
-    crosscompile_libarchive(libarchive-android android.toolchain.cmake)
+    crosscompile_libarchive(libarchive-android ${toolchain_android_file})
   endif()
-  crosscompile_vtk(vtk-android android.toolchain.cmake)
-  crosscompile_ves(ves-android android android.toolchain.cmake)
+  #crosscompile_vtk(vtk-android ${toolchain_android_file})
+  crosscompile_ves(ves-android android ${toolchain_android_file})
 endif()
 
 if(VES_HOST_SUPERBUILD)
