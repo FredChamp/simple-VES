@@ -40,9 +40,9 @@ set(source_prefix ${base}/Source)
 set(build_prefix ${base}/Build)
 set(install_prefix ${CMAKE_INSTALL_PREFIX})#${base}/Install)
 
-set(toolchain_dir "${CMAKE_CURRENT_SOURCE_DIR}/CMake/toolchains")
+set(toolchain_dir "${CMAKE_TOOLCHAIN_FILE}")
 set(ves_src_dir "${CMAKE_CURRENT_SOURCE_DIR}")
-set(ves_patch_dir "${ves_src_dir}/CMake/patches")
+#set(ves_patch_dir "${ves_src_dir}/CMake/patches")
 set(vtk_src_dir "${source_prefix}/vtk")
 set(vtk_patch_file ${CMAKE_BINARY_DIR}/vtk-patch.cmake)
 configure_file(${CMAKE_SOURCE_DIR}/CMake/vtk-patch.cmake.in
@@ -373,8 +373,3 @@ if(VES_IOS_SUPERBUILD)
       COMMENT "Creating vtk framework")
     add_dependencies(vtk-framework vtk-ios-simulator vtk-ios-device)
 endif()
-
-
-# CTestCustom.cmake needs to be placed at the top level build directory
-#configure_file(${CMAKE_SOURCE_DIR}/CMake/CTestCustom.cmake.in
-#               ${CMAKE_BINARY_DIR}/CTestCustom.cmake COPYONLY)
