@@ -40,9 +40,9 @@ set(source_prefix ${base}/Source)
 set(build_prefix ${base}/Build)
 set(install_prefix ${CMAKE_INSTALL_PREFIX})#${base}/Install)
 
-set(toolchain_dir "${CMAKE_TOOLCHAIN_FILE}")
+#set(toolchain_dir "${CMAKE_TOOLCHAIN_FILE}")
 set(ves_src_dir "${CMAKE_CURRENT_SOURCE_DIR}")
-set(vtk_src_dir "${source_prefix}/vtk")
+#set(vtk_src_dir "${source_prefix}/vtk")
 set(vtk_patch_file ${CMAKE_BINARY_DIR}/vtk-patch.cmake)
 
 
@@ -146,14 +146,14 @@ endmacro()
 #
 # libarchive crosscompile
 #
-macro(crosscompile_libarchive proj toolchain_file)
+macro(crosscompile_libarchive proj)
   ExternalProject_Add(
     ${proj}
     SOURCE_DIR ${source_prefix}/libarchive
     DOWNLOAD_COMMAND ""
     DEPENDS libarchive-download
     CMAKE_ARGS
-      -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${toolchain_dir}/${toolchain_file}
+      -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${CMAKE_TOOLCHAIN_FILE}
       -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}/${proj}
       -DCMAKE_BUILD_TYPE:STRING=${build_type}
       -DBUILD_SHARED_LIBS:BOOL=OFF
@@ -203,7 +203,7 @@ macro(compile_curl tag)
 endmacro()
 
 
-macro(crosscompile_curl proj toolchain_file)
+macro(crosscompile_curl proj)
   ExternalProject_Add(
     ${proj}
     DOWNLOAD_COMMAND ""
@@ -215,8 +215,7 @@ macro(crosscompile_curl proj toolchain_file)
       -DCURL_STATICLIB:BOOL=ON
       -DBUILD_CURL_EXE:BOOL=OFF
       -DBUILD_CURL_TESTS:BOOL=OFF
-      -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${toolchain_dir}/${toolchain_file}
-      -C ${toolchain_dir}/curl-TryRunResults.cmake
+      -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${CMAKE_TOOLCHAIN_FILE}
   )
 endmacro()
 
@@ -265,7 +264,7 @@ macro(compile_ves proj)
 endmacro()
 
 
-macro(crosscompile_ves proj tag toolchain_file)
+macro(crosscompile_ves proj tag)
   list(APPEND VES_SUPERBUILD_${tag}_OPTS
     "-DVES_USE_CURL:BOOL=${VES_USE_CURL}"
     "-DVES_USE_LIBARCHIVE:BOOL=${VES_USE_LIBARCHIVE}"
@@ -298,7 +297,7 @@ macro(crosscompile_ves proj tag toolchain_file)
     CMAKE_ARGS
       -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}
       -DCMAKE_BUILD_TYPE:STRING=${build_type}
-      -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${toolchain_dir}/${toolchain_file}
+      -DCMAKE_TOOLCHAIN_FILE:FILEPATH=${CMAKE_TOOLCHAIN_FILE}
       -DCMAKE_CXX_FLAGS:STRING=${VES_CXX_FLAGS}
       -DBUILD_SHARED_LIBS:BOOL=OFF
       -DVES_USE_VTK:BOOL=ON
@@ -336,15 +335,13 @@ if(VES_IOS_SUPERBUILD)
 endif()
 
 if(VES_ANDROID_SUPERBUILD)
-    set(toolchain_android_file "android.toolchain.cmake")
   if (VES_USE_CURL)
-    crosscompile_curl(curl-android ${toolchain_android_file})
+    crosscompile_curl(curl-android)
   endif()
   if (VES_USE_LIBARCHIVE)
-    crosscompile_libarchive(libarchive-android ${toolchain_android_file})
+    crosscompile_libarchive(libarchive-android)
   endif()
-  #crosscompile_vtk(vtk-android ${toolchain_android_file})
-  crosscompile_ves(ves-android android ${toolchain_android_file})
+  crosscompile_ves(ves-android android)
 endif()
 
 if(VES_HOST_SUPERBUILD)
