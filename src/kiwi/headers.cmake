@@ -1,0 +1,43 @@
+set(headers
+  cJSON.h
+  vesKiwiAnimationRepresentation.h
+  vesKiwiArchiveUtils.h
+  vesKiwiBaseApp.h
+  vesKiwiBaselineImageTester.h
+  vesKiwiBrainAtlasRepresentation.h
+  vesKiwiCameraInteractor.h
+  vesKiwiCameraSpinner.h
+  vesKiwiCameraTransition.h
+  vesKiwiColorMapCollection.h
+  vesKiwiCurlDownloader.h
+  vesKiwiDataConversionTools.h
+  vesKiwiDataLoader.h
+  vesKiwiDataRepresentation.h
+  vesKiwiEasing.h
+  vesKiwiFPSCounter.h
+  vesKiwiImagePlaneDataRepresentation.h
+  vesKiwiImageWidgetRepresentation.h
+  vesKiwiPlaneWidget.h
+  vesKiwiPolyDataRepresentation.h
+  vesKiwiPVRemoteRepresentation.h
+  vesKiwiScalarTransition.h
+  vesKiwiSceneRepresentation.h
+  vesKiwiStreamingDataRepresentation.h
+  vesKiwiTestHelper.h
+  vesKiwiText2DRepresentation.h
+  vesKiwiTransition.h
+  vesKiwiViewerApp.h
+  vesKiwiWidgetInteractionDelegate.h
+  vesKiwiWidgetRepresentation.h
+  vesMidasClient.h
+  vesPVWebClient.h
+  vesPVWebDataSet.h
+  )
+
+set(build_headers
+  vesKiwiOptions.h
+  )
+
+set(header_dirs
+  .
+  )

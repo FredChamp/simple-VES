@@ -1,0 +1,69 @@
+set(headers
+  vesActor.h
+  vesBackground.h
+  vesBlend.h
+  vesBlendFunction.h
+  vesBooleanUniform.h
+  vesBoundingObject.h
+  vesCamera.h
+  vesColorUniform.h
+  vesCullVisitor.h
+  vesDepth.h
+  vesEigen.h
+  vesEngineUniform.h
+  vesFBO.h
+  vesFBORenderTarget.h
+  vesGL.h
+  vesGLTypes.h
+  vesGeometryData.h
+  vesGroupNode.h
+  vesImage.h
+  vesIntegerUniform.h
+  vesMapper.h
+  vesMaterial.h
+  vesMaterialAttribute.h
+  vesMath.h
+  vesModelViewUniform.h
+  vesNode.h
+  vesNormalMatrixUniform.h
+  vesObject.h
+  vesOpenGLSupport.h
+  vesPrimitive.h
+  vesProjectionUniform.h
+  vesRenderData.h
+  vesRenderLeaf.h
+  vesRenderStage.h
+  vesRenderState.h
+  vesRenderTarget.h
+  vesRenderToTexture.h
+  vesRenderer.h
+  vesSetGet.h
+  vesShader.h
+  vesShaderProgram.h
+  vesSharedPtr.h
+  vesSourceData.h
+  vesStateAttributeBits.h
+  vesTestHelper.h
+  vesTexture.h
+  vesTransformInterface.h
+  vesTransformNode.h
+  vesTransformPrivate.h
+  vesUniform.h
+  vesVertexAttribute.h
+  vesVertexAttributeKeys.h
+  vesViewport.h
+  vesVisitor.h
+
+)
+
+set(header_dirs
+  .
+)
+
+set(build_headers
+  vesVersion.h
+)
+
+set(build_header_dirs
+  .
+)
