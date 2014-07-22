@@ -376,5 +376,5 @@ endif()
 
 
 # CTestCustom.cmake needs to be placed at the top level build directory
-configure_file(${CMAKE_SOURCE_DIR}/CMake/CTestCustom.cmake.in
-               ${CMAKE_BINARY_DIR}/CTestCustom.cmake COPYONLY)
+#configure_file(${CMAKE_SOURCE_DIR}/CMake/CTestCustom.cmake.in
+#               ${CMAKE_BINARY_DIR}/CTestCustom.cmake COPYONLY)
