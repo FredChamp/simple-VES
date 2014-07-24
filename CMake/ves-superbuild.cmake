@@ -305,6 +305,7 @@ macro(crosscompile_ves proj tag)
       #-DVTK_DIR:PATH=${build_prefix}/vtk-${tag}
       ${VES_SUPERBUILD_${tag}_OPTS}
      # -DEIGEN_INCLUDE_DIR:PATH=${install_prefix}/eigen
+      -DEIGEN_INCLUDE_DIR${EIGEN_INCLUDE_DIR}
       -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE}
   )
 
