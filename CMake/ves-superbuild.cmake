@@ -79,21 +79,21 @@ macro(force_build proj)
 endmacro()
 
 
-macro(install_eigen)
-  set(eigen_url http://vtk.org/files/support/eigen-3.1.2.tar.gz)
-  set(eigen_md5 bb639388192cb80f1ee797f5dbdbe74f)
-  ExternalProject_Add(
-    eigen
-    SOURCE_DIR ${source_prefix}/eigen
-    DOWNLOAD_DIR ${VES_DOWNLOAD_PREFIX}
-    URL ${eigen_url}
-    URL_MD5 ${eigen_md5}
-    CONFIGURE_COMMAND ""
-    BUILD_COMMAND ""
-    INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory "${source_prefix}/eigen/Eigen" "${install_prefix}/eigen/Eigen"
-                 && ${CMAKE_COMMAND} -E copy_directory "${source_prefix}/eigen/unsupported" "${install_prefix}/eigen/unsupported"
-  )
-endmacro()
+# macro(install_eigen)
+#   set(eigen_url http://vtk.org/files/support/eigen-3.1.2.tar.gz)
+#   set(eigen_md5 bb639388192cb80f1ee797f5dbdbe74f)
+#   ExternalProject_Add(
+#     eigen
+#     SOURCE_DIR ${source_prefix}/eigen
+#     DOWNLOAD_DIR ${VES_DOWNLOAD_PREFIX}
+#     URL ${eigen_url}
+#     URL_MD5 ${eigen_md5}
+#     CONFIGURE_COMMAND ""
+#     BUILD_COMMAND ""
+#     INSTALL_COMMAND ${CMAKE_COMMAND} -E copy_directory "${source_prefix}/eigen/Eigen" "${install_prefix}/eigen/Eigen"
+#                  && ${CMAKE_COMMAND} -E copy_directory "${source_prefix}/eigen/unsupported" "${install_prefix}/eigen/unsupported"
+#   )
+# endmacro()
 
 
 #
@@ -293,7 +293,7 @@ macro(crosscompile_ves proj tag)
     ${proj}
     SOURCE_DIR ${ves_src_dir}
     DOWNLOAD_COMMAND ""
-    DEPENDS eigen ${VES_SUPERBUILD_${tag}_DEPS}
+    DEPENDS ${VES_SUPERBUILD_${tag}_DEPS}
     CMAKE_ARGS
       -DCMAKE_INSTALL_PREFIX:PATH=${install_prefix}
       -DCMAKE_BUILD_TYPE:STRING=${build_type}
@@ -302,17 +302,15 @@ macro(crosscompile_ves proj tag)
       -DBUILD_SHARED_LIBS:BOOL=OFF
       -DVES_USE_VTK:BOOL=ON
       -DVES_NO_SUPERBUILD:BOOL=ON
-      -DVTK_DIR:PATH=${build_prefix}/vtk-${tag}
+      #-DVTK_DIR:PATH=${build_prefix}/vtk-${tag}
       ${VES_SUPERBUILD_${tag}_OPTS}
-      -DEIGEN_INCLUDE_DIR:PATH=${install_prefix}/eigen
+     # -DEIGEN_INCLUDE_DIR:PATH=${install_prefix}/eigen
       -DPYTHON_EXECUTABLE:FILEPATH=${PYTHON_EXECUTABLE}
   )
 
   force_build(${proj})
 endmacro()
 
-
-install_eigen()
 if (VES_USE_CURL)
   download_curl()
 endif()
