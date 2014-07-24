@@ -1,7 +1,6 @@
 
 # find and include eigen
-find_package(Eigen REQUIRED)
-include_directories(${EIGEN_INCLUDE_DIRS})
+include_directories(${EIGEN_INCLUDE_DIR})
 
 if(VES_USE_DESKTOP_GL)
   find_package(OpenGL REQUIRED)

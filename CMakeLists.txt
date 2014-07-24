@@ -7,8 +7,6 @@ endif()
 
 project(VES)
 
-#list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake/Modules")
-
 # set project variables
 set(VES_TARGETS_NAME ves-targets)
 set(VES_INSTALL_BIN_DIR bin)
