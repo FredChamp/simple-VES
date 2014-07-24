@@ -1,10 +1,20 @@
 
 # Introduction
 
+This version of VES is a modified version of the original one, used as dependencies in tfw4spl (IRCAD)
+
+## VES
 VES is the VTK OpenGL ES Rendering Toolkit. It is a C++ rendering library for
 mobile devices using OpenGL ES 2.0. VES integrates with the Visualization
 Toolkit (VTK) to deliver scientific and medical visualization capabilities
 to mobile application developers.
+
+the current repository is a fork from http://vtk.org/VES.git
+
+## fw4spl 
+FW4SPL is a component-oriented architecture with the notion of role-based programming. FW4SPL consists of a set of cross-platform C++ libraries. For now, FW4SPL focuses on the problem of medical images processing and visualization.
+
+https://code.google.com/p/fw4spl/
 
 # Licensing
 
@@ -21,7 +31,3 @@ to mobile application developers.
 # Wiki
 
 http://vtk.org/Wiki/VES
-
-# Support
-
-ves@public.kitware.com
