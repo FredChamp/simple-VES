@@ -1,13 +1,13 @@
 
-Introduction
-============
+# Introduction
+
 VES is the VTK OpenGL ES Rendering Toolkit. It is a C++ rendering library for
 mobile devices using OpenGL ES 2.0. VES integrates with the Visualization
 Toolkit (VTK) to deliver scientific and medical visualization capabilities
 to mobile application developers.
 
-Licensing
-=========
+# Licensing
+
 - For VES license please refer LICENSE.txt
 
 - VES uses Eigen and Eigen is LGPL license. Please visit
@@ -18,10 +18,10 @@ Licensing
   Please visit http://www.vtk.org/VTK/project/license.html for more information
   on VTK licensing.
 
-Wiki
-====
+# Wiki
+
 http://vtk.org/Wiki/VES
 
-Support
-=======
+# Support
+
 ves@public.kitware.com
