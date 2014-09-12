@@ -14,7 +14,7 @@ the current repository is a fork from http://vtk.org/VES.git
 ## FW4SPL
 FW4SPL is a component-oriented architecture with the notion of role-based programming. FW4SPL consists of a set of cross-platform C++ libraries. For now, FW4SPL focuses on the problem of medical images processing and visualization.
 
-https://code.google.com/p/fw4spl/
+https://github.com/fw4spl-org
 
 # Licensing
 
